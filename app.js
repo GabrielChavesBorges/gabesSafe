@@ -1,7 +1,7 @@
 // Package setup: --------------------------------------------------------------
 
-import dotEnv from "dotenv";
-dotEnv.config();
+import DotEnv from "dotenv";
+DotEnv.config();
 
 import React from "react";
 import Mongoose from "mongoose";
@@ -14,7 +14,7 @@ const databasePassword  = process.env.DB_PASSWORD;
 const databaseName      = process.env.DB_NAME;
 const databaseLocation  = process.env.DB_LOCATION;
 
-mongoose.connect(
+Mongoose.connect(
   databaseProtocol  +
   databaseUser      +
   databasePassword  +
