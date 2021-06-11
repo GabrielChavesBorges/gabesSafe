@@ -11,8 +11,8 @@ const app = Express();
 const saltRounds = 12; 
 // Password safety level, the highest the more secure but more slow to login.
 
-app.use(express.urlencoded({extended:true}));
-app.use(express.static("public"));
+app.use(Express.urlencoded({extended:true}));
+app.use(Express.static("src/views"));
 
 // Database setup: -------------------------------------------------------------
 
@@ -27,13 +27,17 @@ Mongoose.connect(
   databaseUser      +
   databasePassword  +
   databaseLocation  +
-  databaseName
+  databaseName,
+  {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+  }
 );
 
 // Express routes: -------------------------------------------------------------
 
 app.get("/", (req, res) => {
-  // implement
+  res.render("index");
 })
 
 // Connect server:

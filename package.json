@@ -1,5 +1,6 @@
 {
   "name": "gabessafe",
+  "type": "module",
   "version": "1.0.0",
   "description": "A safe vault application for storing sensitive data.",
   "main": "app.js",
