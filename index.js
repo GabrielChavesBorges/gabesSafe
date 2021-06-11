@@ -4,6 +4,7 @@ import DotEnv from "dotenv";
 DotEnv.config();
 
 import React from "react";
+import ReactDOM from "react-dom";
 import Mongoose from "mongoose";
 
 // Database setup: -------------------------------------------------------------
