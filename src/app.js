@@ -8,22 +8,20 @@ import Express from "express";
 import Mongoose from "mongoose";
 
 const app = Express();
-const saltRounds = 12; /* Password safety level, the highest the more secure but
-  more slow to login. */
+const saltRounds = 12; 
+// Password safety level, the highest the more secure but more slow to login.
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.static("public"));
 
 // Database setup: -------------------------------------------------------------
 
-// Database parameters:
 const databaseProtocol  = "mongodb+srv://"
 const databaseUser      = process.env.DB_USER + ":";
 const databasePassword  = process.env.DB_PASSWORD;
 const databaseName      = process.env.DB_NAME;
 const databaseLocation  = process.env.DB_LOCATION;
 
-// Start connection:
 Mongoose.connect(
   databaseProtocol  +
   databaseUser      +
@@ -32,21 +30,14 @@ Mongoose.connect(
   databaseName
 );
 
-// Schemas:
-const userSchema = new Mongoose.Schema({
-  email: {
-    type: String,
-    required: [true, "Error: cannot save user without email."]
-  },
-  password: {
-    type: String,
-    required: [true, "Error: cannot save user without password."]
-  }
-});
+// Express routes: -------------------------------------------------------------
 
-const keySchema = new Mongoose.Schema({
-  title: String,
-  link: String,
-  password: String
+app.get("/", (req, res) => {
+  // implement
+})
+
+// Connect server:
+app.listen(3000, () => {
+  console.log("Server up.");
 });
   
