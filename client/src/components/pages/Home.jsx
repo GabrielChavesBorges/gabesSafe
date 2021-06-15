@@ -5,7 +5,7 @@ function Home() {
     return (
         <div>
             <h1>Gabe's Safe</h1>
-            <button>Register</button>
+            <Link to="/register"><button>Register</button></Link>
             <Link to="/login"><button>Log in</button></Link>
         </div>
     );
