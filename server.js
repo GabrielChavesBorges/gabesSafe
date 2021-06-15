@@ -1,15 +1,13 @@
 // Package setup: --------------------------------------------------------------
 
-import DotEnv from "dotenv"; 
-DotEnv.config(); // This must run before anything else.
-
+// node -r dotenv/config server.js dotenv_config_path=/C:/Users/gabri/OneDrive/Documents/Development/gabesSafe/.env
 import Bcrypt from "bcrypt";
 import Express from "express";
 import Mongoose from "mongoose";
 
 const app = Express();
 const saltRounds = 12; 
-// Password safety level, the highest the more secure but more slow to login.
+// Password safety level, the higher the more secure but slower to login.
 
 app.use(Express.urlencoded({extended:true}));
 app.use(Express.static("src/views"));
