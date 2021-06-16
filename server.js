@@ -5,6 +5,7 @@ import Bcrypt from "bcrypt";
 import Express from "express";
 import Mongoose from "mongoose";
 import Cors from "cors";
+import User from "./models/User.js";
 
 const app = Express();
 const saltRounds = 12; 
@@ -41,12 +42,52 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", (req, res) => {
-  console.log(req.body);
-  res.send("ok");
+
+  if(req.body.email !== "") {
+
+    // Look for user in db:
+    User.findOne({ email: req.body.email }, (readError, foundUser) => {
+      if(!readError) {
+        if(!foundUser) {
+          // If no such user found, create new user.
+          Bcrypt.genSalt(saltRounds, (saltError, salt) => {
+            if(!saltError) {
+              Bcrypt.hash(req.body.password, salt, (hashError, hash) => {
+                if(!hashError) {
+                  const newUser = new User ({
+                    email: req.body.email,
+                    password: hash
+                  });
+                  newUser.save(saveError => {
+                    if(!saveError) {
+                      res.send("User created: " + req.body.email);
+                    } else {
+                      console.log(saveError);
+                      res.send(saveError);
+                    }
+                  });
+                } else {
+                  console.log(hashError);
+                }
+              });
+            } else {
+              console.log(saltError);
+            }
+          });
+        } else {
+          res.send("User already exists.");
+        }
+      } else {
+      console.log(readError);
+      }
+    });
+
+  } else {
+    res.send("Empty fields.");
+  }
 })
 
 // Connect server:
 app.listen(5000, () => {
   console.log("Server up.");
 });
-  
