@@ -68,18 +68,21 @@ function Register() {
                 <input 
                     name="email" 
                     placeholder="Email"
+                    type="email"
                     value={registration.email}
                     onChange={updateRegistration}
                 />
                 <input 
                     name="password" 
                     placeholder="Password"
+                    type="password"
                     value={registration.password}
                     onChange={updateRegistration}
                 />
                 <input 
                     name="passwordConfirmation" 
                     placeholder="Confirm your password"
+                    type="password"
                     value={registration.passwordConfirmation}
                     onChange={updateRegistration}
                 />
