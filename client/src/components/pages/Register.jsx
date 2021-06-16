@@ -8,7 +8,6 @@ function Register() {
     };
 
     let [registration, setRegistration] = useState(emptyRegistration);
-    let [content, setContent] = useState("Pending");
     let [buttonClick, setButtonClick] = useState(false);
 
     function register(event) {
