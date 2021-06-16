@@ -4,13 +4,15 @@
 import Bcrypt from "bcrypt";
 import Express from "express";
 import Mongoose from "mongoose";
+import Cors from "cors";
 
 const app = Express();
 const saltRounds = 12; 
 // Password safety level, the higher the more secure but slower to login.
 
-app.use(Express.urlencoded({extended:true}));
+app.use(Express.json());
 app.use(Express.static("src/views"));
+app.use(Cors());
 
 // Database setup: -------------------------------------------------------------
 
@@ -35,11 +37,16 @@ Mongoose.connect(
 // Express routes: -------------------------------------------------------------
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.send("Hello World!");
+})
+
+app.post("/", (req, res) => {
+  console.log(req.body);
+  res.send("ok");
 })
 
 // Connect server:
-app.listen(3000, () => {
+app.listen(5000, () => {
   console.log("Server up.");
 });
   
