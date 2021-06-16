@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 function Register() {
+    const history = useHistory();
     const emptyRegistration = {
         email: "",
         password: "",
@@ -9,6 +11,7 @@ function Register() {
 
     let [registration, setRegistration] = useState(emptyRegistration);
     let [buttonClick, setButtonClick] = useState(false);
+    let [notification, setNotification] = useState("");
 
     function register(event) {
         if(event.target.password.value !== "") {
@@ -16,11 +19,11 @@ function Register() {
                 event.target.passwordConfirmation.value) {
                 setButtonClick(!buttonClick);
             } else {
-                console.log("passwords don't match");
+                setNotification("passwords don't match");
                 setRegistration(emptyRegistration);
             }
         } else {
-            console.log("Password not filled");
+            setNotification("Password field is empty.");
         }
         event.preventDefault();
     }
@@ -38,7 +41,16 @@ function Register() {
             })
         })
         .then(response => response.text())
-        .then(data => console.log(data))
+        .then(data => {
+            if(data === "Empty fields.") {
+                // First call, can be ignored.
+            } else if(data === "User already exists.") {
+                setNotification(data);
+            } else { // Success.
+                setNotification(data);
+                history.push("/safe");
+            }
+        })
 
         setRegistration(emptyRegistration);
     }, [buttonClick]);
@@ -73,6 +85,7 @@ function Register() {
                 />
                 <button type="submit">Register</button>
             </form>
+            <p>{notification}</p>
         </div>
     );
 }
