@@ -38,47 +38,56 @@ Mongoose.connect(
 // Express routes: -------------------------------------------------------------
 
 app.post("/register", (req, res) => {
-  if(req.body.email !== "") {
-    // Look for user in db:
-    User.findOne({ email: req.body.email }, (dbError, foundUser) => {
-      if(!dbError) {
-        if(!foundUser) {
-          // If no such user found, create new user.
-          Bcrypt.genSalt(saltRounds, (saltError, salt) => {
-            if(!saltError) {
-              Bcrypt.hash(req.body.password, salt, (hashError, hash) => {
-                if(!hashError) {
-                  const newUser = new User ({
-                    email: req.body.email,
-                    password: hash
-                  });
-                  newUser.save(saveError => {
-                    if(!saveError) {
-                      res.send("User created.");
-                    } else {
-                      console.log(saveError);
-                      res.send(saveError);
-                    }
-                  });
-                } else {
-                  console.log(hashError);
-                }
-              });
-            } else {
-              console.log(saltError);
-            }
-          });
-        } else {
-          res.send("User already exists.");
-        }
-      } else {
-      console.log(dbError);
-      }
-    });
-
-  } else {
+  // If there are empty fields.
+  if(req.body.email === "" || req.body.password === "") {
     res.send("Empty fields.");
-  }
+  } else {
+    User.findOne({ email: req.body.email }, (dbError, foundUser) => {
+      // If find opperation fails.
+      if(dbError) {
+        console.log(dbError);
+        res.send(dbError);
+      } else if(foundUser) {
+        // If user already exists.
+        res.send("User already exists.");
+      } else {
+        // Salt password encryption.
+        Bcrypt.genSalt(saltRounds, (saltError, salt) => {
+          if(saltError) {
+            // If salt opperation fails.
+            console.log(saltError);
+            res.send(dbError);
+          } else {
+            // Encrypt password.
+            Bcrypt.hash(req.body.password, salt, (hashError, hash) => {
+              if(hashError) {
+                // If encryption fails.
+                console.log(hashError);
+                res.send(hashError);
+              } else {
+                // Create model.
+                const newUser = new User ({
+                  email: req.body.email,
+                  password: hash
+                });
+                // Insert in database.
+                newUser.save(saveError => {
+                  if(saveError) {
+                    // If insertion fails.
+                    console.log(saveError);
+                    res.send(saveError);
+                  } else {
+                    // On success.
+                    res.send("User created.");
+                  } 
+                });
+              } 
+            });
+          } 
+        });
+      } 
+    });
+  }  
 });
 
 app.post("/login", (req, res) => {
