@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 function Login() {
     const history = useHistory();
+    const emailValidation = /(.+)@(.+){2,}\.(.+){2,}/;
     const emptyLogin = {
         email: "",
         password: ""
@@ -20,7 +21,10 @@ function Login() {
         if(login.email === "" || 
             login.password === "") {
             setNotification("Please fill out all fields.");
-        } else {
+        } else if(!emailValidation.test(login.email)) {
+            setNotification("Invalid email.");
+            setLogin(emptyLogin);
+        }else {
             fetch("http://localhost:5000/login", {
             method: "POST",
             headers: {
@@ -48,29 +52,32 @@ function Login() {
                 }
             });
         }
+        event.preventDefault();
     }
         
     return (
         <div>
             <h1>Login</h1>
 
-            <input
-                name="email"
-                placeholder="Email"
-                type="email"
-                value={login.email}
-                onChange={updateLogin}
-            />
+            <form>
+                <input
+                    name="email"
+                    placeholder="Email"
+                    type="email"
+                    value={login.email}
+                    onChange={updateLogin}
+                />
 
-            <input
-                name="password"
-                placeholder="Password"
-                type="password"
-                value={login.password}
-                onChange={updateLogin}
-            />
+                <input
+                    name="password"
+                    placeholder="Password"
+                    type="password"
+                    value={login.password}
+                    onChange={updateLogin}
+                />
 
-            <button onClick={attemptLogin}>Login</button>
+                <button onClick={attemptLogin}>Login</button>
+            </form>
 
             <p>{notification}</p>
         </div>

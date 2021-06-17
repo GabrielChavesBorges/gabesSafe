@@ -4,11 +4,17 @@ const emailMissingMessage = "Error: Email is a compulsory field for user " +
 "creation";
 const passwordMissingMessage = "Error: Password is a compulsory field for " +
 "user creation";
+const emailValidation = /(.+)@(.+){2,}\.(.+){2,}/;
 
 const userSchema = new Mongoose.Schema({
     email: {
         type: String,
-        required: [true, emailMissingMessage]
+        validate: {
+            validator: (value) => (emailValidation.test(value)),
+            message: "Invalid email."
+        },
+        required: [true, emailMissingMessage],
+        unique: true
     },
     password: {
         type: String,

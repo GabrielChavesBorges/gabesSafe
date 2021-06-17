@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 function Register() {
     const history = useHistory();
+    const emailValidation = /(.+)@(.+){2,}\.(.+){2,}/;
     const emptyRegistration = {
         email: "",
         password: "",
@@ -22,6 +23,9 @@ function Register() {
             registration.password === "" ||
             registration.passwordConfirmation === "") {
             setNotification("Please fill out all fields.");
+        } else if (!emailValidation.test(registration.email)) {
+            setNotification("Invalid email.");
+            setRegistration(emptyRegistration);
         } else if (registration.password !== 
                 registration.passwordConfirmation) {
                 setNotification("Passwords don't match.");
