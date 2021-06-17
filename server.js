@@ -42,12 +42,10 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", (req, res) => {
-
   if(req.body.email !== "") {
-
     // Look for user in db:
-    User.findOne({ email: req.body.email }, (readError, foundUser) => {
-      if(!readError) {
+    User.findOne({ email: req.body.email }, (dbError, foundUser) => {
+      if(!dbError) {
         if(!foundUser) {
           // If no such user found, create new user.
           Bcrypt.genSalt(saltRounds, (saltError, salt) => {
@@ -78,14 +76,37 @@ app.post("/", (req, res) => {
           res.send("User already exists.");
         }
       } else {
-      console.log(readError);
+      console.log(dbError);
       }
     });
 
   } else {
     res.send("Empty fields.");
   }
-})
+});
+
+app.post("/login", (req, res) => {
+  // If fields come blank
+  if(req.body.email === "") {
+    res.send("Empty fields.");
+  } else {
+    User.findOne({ email: req.body.email }, (dbError, foundUser) => {
+      // If user doesn't exist.
+      if(!foundUser) {
+        res.send("User not found.");
+      } else {
+        // If password is invalid.
+        Bcrypt.compare(req.body.password, foundUser.password, (err, result) => {
+          if(!result) {
+            res.send("Invalid password.");
+          } else { // If login successful.
+            res.send("Login successful.");
+          }
+        });
+      }
+    });
+  }
+});
 
 // Connect server:
 app.listen(5000, () => {
