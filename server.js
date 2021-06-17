@@ -37,11 +37,7 @@ Mongoose.connect(
 
 // Express routes: -------------------------------------------------------------
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-})
-
-app.post("/", (req, res) => {
+app.post("/register", (req, res) => {
   if(req.body.email !== "") {
     // Look for user in db:
     User.findOne({ email: req.body.email }, (dbError, foundUser) => {
@@ -58,7 +54,7 @@ app.post("/", (req, res) => {
                   });
                   newUser.save(saveError => {
                     if(!saveError) {
-                      res.send("User created: " + req.body.email);
+                      res.send("User created.");
                     } else {
                       console.log(saveError);
                       res.send(saveError);
