@@ -24,7 +24,7 @@ function Safe(props) {
                     })
             }).then(response => response.json()).then(data => setEntries(data));
         }
-    }, );
+    }, []);
 
     function addEntry(entry) {
         fetch("http://localhost:5000/insertEntry", {
@@ -37,10 +37,21 @@ function Safe(props) {
         }).then(response => response.json()).then(data => setEntries(data));
     }
 
+    function deleteEntry(entry) {
+        fetch("http://localhost:5000/entry", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                "body": JSON.stringify({"login": props.login, "entryId": entry})
+        }).then(response => response.json()).then(data => setEntries(data));
+    }
+
     return(
         <div>
             <h1>Safe</h1>
-            <EntriesDeck entries={entries}/>
+            <EntriesDeck entries={entries} onDelete={deleteEntry}/>
             <AddEntryForm onSubmit={addEntry}/>
         </div>
     );

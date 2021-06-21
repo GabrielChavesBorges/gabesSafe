@@ -3,6 +3,10 @@ import {Card, CardContent, CardActions, IconButton} from "@material-ui/core";
 import DeleteIcon from '@material-ui/icons/Delete';
 
 function EntryCard(props) {
+  function deleteEntry() {
+    props.onDelete(props.content._id);
+  }
+
   return(
     <Card>
       <CardContent>
@@ -12,7 +16,7 @@ function EntryCard(props) {
         <p>{props.content.password}</p>
       </CardContent>
       <CardActions>
-        <IconButton>
+        <IconButton onClick={deleteEntry}>
           <DeleteIcon />
         </IconButton>
       </CardActions>

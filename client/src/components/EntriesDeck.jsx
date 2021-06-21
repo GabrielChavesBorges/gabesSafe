@@ -17,13 +17,20 @@ const useStyles = makeStyles((theme) => ({
 function EntriesDeck(props) {
   const classes = useStyles();
 
+  function deleteEntry(entry) {
+    props.onDelete(entry);
+  }
+
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
         {props.entries.map((entry) => {
             return(
               <Grid key={entry._id + "grid"} item xs={3}>
-                <EntryCard key={entry._id} content={entry}/>
+                <EntryCard 
+                  key={entry._id} 
+                  content={entry} 
+                  onDelete={deleteEntry}/>
               </Grid>
             )
         })}

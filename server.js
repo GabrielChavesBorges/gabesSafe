@@ -136,7 +136,6 @@ app.post("/login", (req, res) => {
 
 app.post("/populateDeck", (req, res) => {
   // Get user, find it in DB and return all of its entries.
-  console.log(req.body.login);
   User.findOne({email: req.body.login}, (err, foundUser) => {
     if(err) {
       console.log(err);
@@ -158,6 +157,23 @@ app.post("/insertEntry", (req, res) => {
       foundUser.entries.push(req.body.entry);
       foundUser.save();
       res.send(foundUser.entries);
+    }
+  });
+});
+
+app.delete("/entry", (req, res) => {
+  User.findOne({email: req.body.login}, (err, foundUser) => {
+    if(err) {
+      console.log(err);
+    } else if (!foundUser){
+      console.log("User not found when deleting entry.");
+    } else {
+      const updatedUser = foundUser;
+      updatedUser.entries = foundUser.entries.filter((entry) => {
+        return entry._id.toString() !== req.body.entryId
+      });
+      updatedUser.save();
+      res.send(updatedUser.entries);
     }
   });
 });
