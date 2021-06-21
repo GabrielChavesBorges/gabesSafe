@@ -21,9 +21,11 @@ function EntriesDashboard(props) {
     <div className={classes.root}>
       <Grid container spacing={3}>
         {props.entries.map((entry) => {
-            return(<Grid item xs={3}>
-              <EntryCard content={entry}/>
-            </Grid>)
+            return(
+              <Grid item xs={3}>
+                <EntryCard key={entry._id} content={entry}/>
+              </Grid>
+            )
         })}
       </Grid>
     </div>

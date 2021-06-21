@@ -147,6 +147,20 @@ app.post("/populateDeck", (req, res) => {
   });
 });
 
+app.post("/insertEntry", (req, res) => {
+  User.findOne({email: req.body.login}, (err, foundUser) => {
+    if(err) {
+      console.log(err);
+    } else if(!foundUser) {
+      console.log("User not found when trying to add entry.");
+    } else {
+      foundUser.entries.push(req.body.entry);
+      foundUser.save();
+      res.send(foundUser.entries);
+    }
+  });
+});
+
 // Connect server:
 app.listen(5000, () => {
   console.log("Server up.");
