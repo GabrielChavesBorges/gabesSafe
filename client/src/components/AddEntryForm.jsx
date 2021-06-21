@@ -25,6 +25,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
   };
 
   const handleClose = () => {
+    setEntryInfo(emptyForm);
     setOpen(false);
   };
 
