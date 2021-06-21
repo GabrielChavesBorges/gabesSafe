@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function EntriesDashboard(props) {
+function EntriesDeck(props) {
   const classes = useStyles();
 
   return (
@@ -32,4 +32,4 @@ function EntriesDashboard(props) {
   );
 }
 
-export default EntriesDashboard;
+export default EntriesDeck;

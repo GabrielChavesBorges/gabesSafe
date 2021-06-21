@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import EntriesDashboard from "../EntriesDashboard";
+import EntriesDeck from "../EntriesDeck";
 import AddEntryForm from "../AddEntryForm";
 import { useHistory } from "react-router-dom";
 
@@ -40,7 +40,7 @@ function Safe(props) {
     return(
         <div>
             <h1>Safe</h1>
-            <EntriesDashboard entries={entries}/>
+            <EntriesDeck entries={entries}/>
             <AddEntryForm onSubmit={addEntry}/>
         </div>
     );
