@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from "react";
 import EntriesDashboard from "../EntriesDashboard";
 import AddEntryForm from "../AddEntryForm";
+import { useHistory } from "react-router-dom";
 
 function Safe(props) {
 
+    let history = useHistory();
     let [entries, setEntries] = useState([]);
 
     // Get initial entries from DB.
     useEffect(() => {
-        fetch("http://localhost:5000/populateDeck", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                "body": JSON.stringify({
-                    login: props.login
-                })
-        }).then(response => response.json())
-        .then(data => {
-            console.log("Deck populating data: " + data);
-            setEntries(data);
-        });
+        if(props.login === "") {
+            history.push("/");
+        } else {
+            fetch("http://localhost:5000/populateDeck", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    "body": JSON.stringify({
+                        login: props.login
+                    })
+            }).then(response => response.json()).then(data => setEntries(data));
+        }
     }, );
 
     function addEntry(entry) {
-        // To do: change so that it records on DB and updates from there.
         fetch("http://localhost:5000/insertEntry", {
                 method: "POST",
                 headers: {
@@ -33,10 +34,7 @@ function Safe(props) {
                     "Accept": "application/json"
                 },
                 "body": JSON.stringify({"login": props.login, "entry": entry})
-        }).then(response => response.json()).then(data => {
-            console.log("Add Entry data: " + data);
-            setEntries(data);
-        });
+        }).then(response => response.json()).then(data => setEntries(data));
     }
 
     return(

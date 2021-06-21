@@ -22,7 +22,7 @@ function EntriesDashboard(props) {
       <Grid container spacing={3}>
         {props.entries.map((entry) => {
             return(
-              <Grid item xs={3}>
+              <Grid key={entry._id + "grid"} item xs={3}>
                 <EntryCard key={entry._id} content={entry}/>
               </Grid>
             )

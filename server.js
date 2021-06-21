@@ -135,7 +135,8 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/populateDeck", (req, res) => {
-  // Get user, find it it DB and return all of its entries.
+  // Get user, find it in DB and return all of its entries.
+  console.log(req.body.login);
   User.findOne({email: req.body.login}, (err, foundUser) => {
     if(err) {
       console.log(err);
