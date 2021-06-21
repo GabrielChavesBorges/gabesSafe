@@ -136,8 +136,14 @@ app.post("/login", (req, res) => {
 
 app.post("/populateDeck", (req, res) => {
   // Get user, find it it DB and return all of its entries.
-  User.findOne({login: req.body.login}, (err, foundUser) => {
-    res.send(foundUser.entries);
+  User.findOne({email: req.body.login}, (err, foundUser) => {
+    if(err) {
+      console.log(err);
+    } else if (!foundUser){
+      console.log("User not found when populating deck.");
+    } else {
+      res.send(foundUser.entries);
+    }
   });
 });
 

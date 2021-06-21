@@ -50,7 +50,7 @@ function Register(props) {
                         setRegistration(emptyRegistration);
                     } else if(data === "User created.") {
                         setNotification(data);
-                        props.signin(registration.email);
+                        props.signin(registration.email, history);
                     } else {
                         setNotification("Error, please try again.");
                         setRegistration(emptyRegistration);

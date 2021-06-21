@@ -8,6 +8,7 @@ function Safe(props) {
 
     // Get initial entries from DB.
     useEffect(() => {
+        console.log("safe login: " + props.login);
         fetch("http://localhost:5000/populateDeck", {
                 method: "POST",
                 headers: {
@@ -30,7 +31,7 @@ function Safe(props) {
     return(
         <div>
             <h1>Safe</h1>
-            {/* <EntriesDashboard entries={entries}/> */}
+            <EntriesDashboard entries={entries}/>
             <AddEntryForm onSubmit={addEntry}/>
         </div>
     );

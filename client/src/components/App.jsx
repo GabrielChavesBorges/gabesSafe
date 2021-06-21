@@ -12,6 +12,7 @@ function App() {
   let [login, setLogin] = useState("");
 
   function signin(email, history) {
+    console.log("Signin login: " + email);
     setLogin(email);
     history.push("/safe");
   }
