@@ -1,7 +1,8 @@
+import { PromiseProvider } from "mongoose";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-function Register() {
+function Register(props) {
     const history = useHistory();
     const emailValidation = /(.+)@(.+){2,}\.(.+){2,}/;
     const emptyRegistration = {
@@ -49,7 +50,7 @@ function Register() {
                         setRegistration(emptyRegistration);
                     } else if(data === "User created.") {
                         setNotification(data);
-                        history.push("/safe");
+                        props.signin(registration.email);
                     } else {
                         setNotification("Error, please try again.");
                         setRegistration(emptyRegistration);

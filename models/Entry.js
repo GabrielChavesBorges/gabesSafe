@@ -1,12 +1,10 @@
 import Mongoose from "mongoose";
 
 const entrySchema = new Mongoose.Schema({
-    description: String,
+    title: String,
     login: String,
     password: String,
     link: String
 });
 
-const Entry = new Mongoose.model("Entry", entrySchema);
-
-export default Entry;
+export default entrySchema;

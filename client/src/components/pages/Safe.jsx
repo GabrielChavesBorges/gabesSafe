@@ -1,36 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EntriesDashboard from "../EntriesDashboard";
-import FormDialog from "../FormDialog";
+import AddEntryForm from "../AddEntryForm";
 
-function Safe() {
-    const initialEntries = [
-        {
-            title: "Facebook",
-            login: "user@gmail.com",
-            password: "test1",
-            link: "facebook.com"
-        },
-        {
-            title: "Google",
-            login: "user@gmail.com",
-            password: "test1",
-            link: "google.com"
-        },
-        {
-            title: "LinkedIn",
-            login: "user@gmail.com",
-            password: "test1",
-            link: "linkedin.com"
-        }
-    ];
+function Safe(props) {
 
-    let [entries, setEntries] = useState(initialEntries);
+    let [entries, setEntries] = useState();
+
+    // Get initial entries from DB.
+    useEffect(() => {
+        fetch("http://localhost:5000/populateDeck", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                "body": JSON.stringify({
+                    login: props.login
+                })
+        }).then(response => response.json()).then(data => {
+            setEntries(data)
+        });
+    }, []);
+
+    function addEntry(entry) {
+        // To do: change so that it records on DB and updates from there.
+        setEntries((previousState) => ([...previousState, entry]));
+    }
 
     return(
         <div>
             <h1>Safe</h1>
-            <EntriesDashboard entries={entries}/>
-            <FormDialog />
+            {/* <EntriesDashboard entries={entries}/> */}
+            <AddEntryForm onSubmit={addEntry}/>
         </div>
     );
 }

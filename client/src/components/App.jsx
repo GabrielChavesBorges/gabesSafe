@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -9,15 +9,33 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 function App() {
+  let [login, setLogin] = useState("");
+
+  function signin(email, history) {
+    setLogin(email);
+    history.push("/safe");
+  }
+
   return (
     <BrowserRouter>
       <div>
         <Header />
         <Switch>
-          <Route path="/" component={Home} exact/>
-          <Route path="/register" component={Register}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/safe" component={Safe}/>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+
+          <Route path="/register">
+            <Register signin={signin}/>
+          </Route>
+
+          <Route path="/login">
+            <Login signin={signin}/>
+          </Route>
+
+          <Route path="/safe">
+            <Safe login={login}/>
+          </Route>
         </Switch>
         <Footer />
       </div>

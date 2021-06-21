@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-function Login() {
-    const history = useHistory();
+function Login(props) {
+    let history = useHistory();
     const emailValidation = /(.+)@(.+){2,}\.(.+){2,}/;
     const emptyLogin = {
         email: "",
@@ -45,7 +45,8 @@ function Login() {
                     setNotification(data);
                     setLogin(emptyLogin);
                 } else if (data === "Login successful.") {
-                    history.push("/safe");
+                    props.signin(login.email, history);
+                    // App will use argument as a prop to Safe jsx.
                 } else {
                     console.log("Unrecognized return from server.");
                     setLogin(emptyLogin);

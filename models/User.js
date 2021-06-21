@@ -1,4 +1,5 @@
 import Mongoose from "mongoose";
+import EntrySchema from "./Entry.js";
 
 const emailMissingMessage = "Error: Email is a compulsory field for user " +
 "creation";
@@ -19,7 +20,8 @@ const userSchema = new Mongoose.Schema({
     password: {
         type: String,
         required: [true, passwordMissingMessage]
-    }
+    },
+    entries: [EntrySchema]
 });
 
 const User = new Mongoose.model("User", userSchema);

@@ -1,15 +1,24 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { useState } from 'react';
+import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle} 
+  from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-export default function FormDialog() {
-  const [open, setOpen] = React.useState(false);
+ function AddEntryForm(props) {
+  const emptyForm = {
+    title: "",
+    link: "",
+    login: "",
+    password: ""
+  };
+
+  let [open, setOpen] = useState(false);
+  let [entryInfo, setEntryInfo] = useState(emptyForm);
+  let [notification, setNotification] = useState(""); 
+
+  function handleChange (event) {
+    const {name, value} = event.target;
+    setEntryInfo((previousState) => ({...previousState, [name]: value}));
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,6 +27,17 @@ export default function FormDialog() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  function handleAdd () {
+    // Check if all fields are blank
+    if(entryInfo.title === "" && entryInfo.link === "" && 
+      entryInfo.login === "" && entryInfo.password === "") {
+      setNotification("Please insert some information before adding.");
+    } else { // Add entry
+      props.onSubmit(entryInfo);
+      handleClose();
+    }
+  }
 
   return (
     <div>
@@ -32,49 +52,59 @@ export default function FormDialog() {
             margin="dense"
             id="title"
             label="Title"
+            name="title"
             autoComplete="off"
             type="text"
+            onChange={handleChange}
+            value={entryInfo.title}
             fullWidth
           />
         </DialogContent>
         <DialogContent>
           <TextField
-            autoFocus
             margin="dense"
             id="userName"
             label="Login"
+            name="login"
             autoComplete="off"
             type="text"
+            onChange={handleChange}
+            value={entryInfo.login}
             fullWidth
           />
         </DialogContent>
         <DialogContent>
           <TextField
-            autoFocus
             margin="dense"
             id="password"
             label="Password"
+            name="password"
             autoComplete="off"
             type="password"
+            onChange={handleChange}
+            value={entryInfo.password}
             fullWidth
           />
         </DialogContent>
         <DialogContent>
           <TextField
-            autoFocus
             margin="dense"
             id="link"
             label="Website link"
+            name="link"
             autoComplete="off"
             type="url"
+            onChange={handleChange}
+            value={entryInfo.link}
             fullWidth
           />
         </DialogContent>
+        <p>{notification}</p>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleAdd} color="primary">
             Add
           </Button>
         </DialogActions>
@@ -82,3 +112,5 @@ export default function FormDialog() {
     </div>
   );
 }
+
+export default AddEntryForm;

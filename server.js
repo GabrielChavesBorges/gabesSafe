@@ -10,6 +10,26 @@ import User from "./models/User.js";
 const app = Express();
 const saltRounds = 12; 
 // Password safety level, the higher the more secure but slower to login.
+const initialEntries = [
+  {
+      title: "Facebook",
+      login: "user@gmail.com",
+      password: "test1",
+      link: "facebook.com"
+  },
+  {
+      title: "Google",
+      login: "user@gmail.com",
+      password: "test1",
+      link: "google.com"
+  },
+  {
+      title: "LinkedIn",
+      login: "user@gmail.com",
+      password: "test1",
+      link: "linkedin.com"
+  }
+];
 
 app.use(Express.json());
 app.use(Express.static("src/views"));
@@ -68,7 +88,8 @@ app.post("/register", (req, res) => {
                 // Create model.
                 const newUser = new User ({
                   email: req.body.email,
-                  password: hash
+                  password: hash,
+                  entries: initialEntries
                 });
                 // Insert in database.
                 newUser.save(saveError => {
@@ -111,6 +132,13 @@ app.post("/login", (req, res) => {
       }
     });
   }
+});
+
+app.post("/populateDeck", (req, res) => {
+  // Get user, find it it DB and return all of its entries.
+  User.findOne({login: req.body.login}, (err, foundUser) => {
+    res.send(foundUser.entries);
+  });
 });
 
 // Connect server:
