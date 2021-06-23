@@ -11,6 +11,9 @@
   },
   "author": "Gabriel Borges",
   "license": "ISC",
+  "engines": {
+    "node": "14.17.0"
+  },
   "bugs": {
     "url": "https://github.com/GabrielChavesBorges/gabesSafe/issues"
   },
