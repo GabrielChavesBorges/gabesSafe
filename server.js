@@ -36,20 +36,20 @@ app.use(Express.static("src/views"));
 app.use(Express.static(path.join(__dirname, 'client/build')));
 
 // ** MIDDLEWARE ** //
-const whitelist = ["https://gabes-safe-server.herokuapp.com"]
-const corsOptions = {
-  origin: function (origin, callback) {
-    console.log("** Origin of request " + origin)
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      console.log("Origin acceptable")
-      callback(null, true)
-    } else {
-      console.log("Origin rejected")
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-app.use(cors(corsOptions));
+// const whitelist = ["https://gabes-safe-server.herokuapp.com"]
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     console.log("** Origin of request " + origin)
+//     if (whitelist.indexOf(origin) !== -1 || !origin) {
+//       console.log("Origin acceptable")
+//       callback(null, true)
+//     } else {
+//       console.log("Origin rejected")
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
+app.use(cors());
 
 // Database setup: -------------------------------------------------------------
 
