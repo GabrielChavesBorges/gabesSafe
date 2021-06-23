@@ -226,6 +226,6 @@ app.put("/entry", (req, res) => {
 // Connect server:
 app.listen(process.env.PORT, () => {
   console.log("Server up");
-}
+});
 
 
