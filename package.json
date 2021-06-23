@@ -5,6 +5,7 @@
   "description": "A safe vault application for storing sensitive data.",
   "main": "./server.js",
   "proxy": "http://localhost:8080",
+  "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
   "scripts": {
     "start": "node server.js"
   },
@@ -15,7 +16,8 @@
   "author": "Gabriel Borges",
   "license": "ISC",
   "engines": {
-    "node": "14.17.0"
+    "node": "14.17.0",
+    "npm": "7.15.0"
   },
   "bugs": {
     "url": "https://github.com/GabrielChavesBorges/gabesSafe/issues"
