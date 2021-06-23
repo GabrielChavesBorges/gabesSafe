@@ -10,7 +10,7 @@ import User from "./models/User.js";
 const app = Express();
 const saltRounds = 12; 
 // Password safety level, the higher the more secure but slower to login.
-const whitelist = ["https://gabes-safe-server.herokuapp.com"]
+const whitelist = ["https://gabes-safe.herokuapp.com"]
 const corsOptions = {
   origin: (origin, callback) => {
     console.log("** Origin of request " + origin)
