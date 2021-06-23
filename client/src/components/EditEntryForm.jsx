@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle} 
-  from '@material-ui/core';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, 
+  IconButton} from '@material-ui/core';
+import EditIcon from "@material-ui/icons/Edit";
 
- function AddEntryForm(props) {
+ function EditEntryForm(props) {
   const emptyForm = {
+    _id: "",
     title: "",
     link: "",
     login: "",
@@ -13,7 +14,6 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 
   let [open, setOpen] = useState(false);
   let [entryInfo, setEntryInfo] = useState(emptyForm);
-  let [notification, setNotification] = useState(""); 
 
   function handleChange (event) {
     const {name, value} = event.target;
@@ -21,6 +21,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
   }
 
   const handleClickOpen = () => {
+    setEntryInfo(props.entry);
     setOpen(true);
   };
 
@@ -29,25 +30,20 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
     setOpen(false);
   };
 
-  function handleAdd () {
-    // Check if all fields are blank
-    if(entryInfo.title === "" && entryInfo.link === "" && 
-      entryInfo.login === "" && entryInfo.password === "") {
-      setNotification("Please insert some information before adding.");
-    } else { // Add entry
-      props.onSubmit(entryInfo);
-      handleClose();
-    }
+  function handleSubmit () {
+    props.onSubmit(entryInfo);
+    handleClose();
   }
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        <p><AddCircleIcon /> Add new password</p>
-      </Button>
-      
+      <IconButton onClick={handleClickOpen}>
+          <EditIcon />
+      </IconButton>
+
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Add new password</DialogTitle>
+        <DialogTitle id="form-dialog-title">Edit password</DialogTitle>
+
         <DialogContent>
           <TextField
             autoFocus
@@ -62,6 +58,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
             fullWidth
           />
         </DialogContent>
+
         <DialogContent>
           <TextField
             margin="dense"
@@ -75,6 +72,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
             fullWidth
           />
         </DialogContent>
+
         <DialogContent>
           <TextField
             margin="dense"
@@ -88,6 +86,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
             fullWidth
           />
         </DialogContent>
+
         <DialogContent>
           <TextField
             margin="dense"
@@ -101,13 +100,13 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
             fullWidth
           />
         </DialogContent>
-        <p>{notification}</p>
+
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleAdd} color="primary">
-            Add
+          <Button onClick={handleSubmit} color="primary">
+            Submit
           </Button>
         </DialogActions>
       </Dialog>
@@ -115,4 +114,4 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
   );
 }
 
-export default AddEntryForm;
+export default EditEntryForm;

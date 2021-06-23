@@ -178,6 +178,31 @@ app.delete("/entry", (req, res) => {
   });
 });
 
+app.put("/entry", (req, res) => {
+  User.updateOne({ 
+    "email": req.body.login, 
+    "entries._id": req.body.updatedEntry._id 
+    }, 
+    {
+    "$set": { "entries.$": req.body.updatedEntry }
+    },
+    (err, operationResult) => {
+    if(err) {
+      console.log(err);
+    } else {
+      User.findOne({ "email": req.body.login }, (err, foundUser) => {
+        if(err) {
+          console.log(err);
+        } else if (!foundUser) {
+          console.log("Unable to find user when updating entry.");
+        } else {
+          res.send(foundUser.entries);
+        }
+      });
+    }
+  });
+});
+
 // Connect server:
 app.listen(5000, () => {
   console.log("Server up.");

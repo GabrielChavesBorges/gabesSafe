@@ -48,10 +48,28 @@ function Safe(props) {
         }).then(response => response.json()).then(data => setEntries(data));
     }
 
+    function editEntry(entry) {
+        fetch("http://localhost:5000/entry", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                "body": JSON.stringify({
+                    "login": props.login, 
+                    "updatedEntry": entry
+                })
+        }).then(response => response.json()).then(data => setEntries(data));
+    }
+
     return(
         <div>
             <h1>Safe</h1>
-            <EntriesDeck entries={entries} onDelete={deleteEntry}/>
+            <EntriesDeck 
+                entries={entries} 
+                onDelete={deleteEntry}
+                onEdit={editEntry}
+            />
             <AddEntryForm onSubmit={addEntry}/>
         </div>
     );

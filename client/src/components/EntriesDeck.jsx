@@ -21,6 +21,10 @@ function EntriesDeck(props) {
     props.onDelete(entry);
   }
 
+  function editEntry(entry) {
+    props.onEdit(entry);
+  }
+
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -30,7 +34,9 @@ function EntriesDeck(props) {
                 <EntryCard 
                   key={entry._id} 
                   content={entry} 
-                  onDelete={deleteEntry}/>
+                  onDelete={deleteEntry}
+                  onEdit={editEntry}
+                />
               </Grid>
             )
         })}
