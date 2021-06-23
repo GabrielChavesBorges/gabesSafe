@@ -8,7 +8,7 @@ function Login(props) {
         email: "",
         password: ""
     };
-    const serverPath = "https://gabes-safe-server.herokuapp.com";
+    const serverPath = "https://gabes-safe.herokuapp.com";
 
     let [notification, setNotification] = useState("");
     let [login, setLogin] = useState(emptyLogin);

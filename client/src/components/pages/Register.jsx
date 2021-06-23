@@ -9,7 +9,7 @@ function Register(props) {
         password: "",
         passwordConfirmation: ""
     };
-    const serverPath = "https://gabes-safe-server.herokuapp.com";
+    const serverPath = "https://gabes-safe.herokuapp.com";
 
     let [registration, setRegistration] = useState(emptyRegistration);
     let [notification, setNotification] = useState("");

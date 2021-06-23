@@ -7,7 +7,7 @@ function Safe(props) {
 
     let history = useHistory();
     let [entries, setEntries] = useState([]);
-    const serverPath = "https://gabes-safe-server.herokuapp.com";
+    const serverPath = "https://gabes-safe.herokuapp.com";
 
     // Get initial entries from DB.
     useEffect(() => {
