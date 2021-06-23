@@ -32,8 +32,7 @@ const initialEntries = [
 ];
 
 app.use(Express.json());
-app.use(Express.static("src/views"));
-app.use(Express.static(path.join(__dirname, 'client/build')));
+app.use(Express.static("client/build"));
 
 // ** MIDDLEWARE ** //
 // const whitelist = ["https://gabes-safe-server.herokuapp.com"]
