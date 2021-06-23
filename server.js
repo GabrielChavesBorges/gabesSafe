@@ -57,6 +57,10 @@ Mongoose.connect(
 
 // Express routes: -------------------------------------------------------------
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
 app.post("/register", (req, res) => {
   // If there are empty fields.
   if(req.body.email === "" || req.body.password === "") {
