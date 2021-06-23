@@ -49,7 +49,7 @@ app.use(Express.static(path.join(__dirname, 'client/build')));
 //     }
 //   }
 // }
-app.use(cors());
+app.use(Cors());
 
 // Database setup: -------------------------------------------------------------
 
@@ -224,6 +224,8 @@ app.put("/entry", (req, res) => {
 });
 
 // Connect server:
-app.listen(process.env.PORT);
+app.listen(process.env.PORT, () => {
+  console.log("Server up");
+}
 
 
