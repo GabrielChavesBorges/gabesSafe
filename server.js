@@ -33,7 +33,22 @@ const initialEntries = [
 
 app.use(Express.json());
 app.use(Express.static("src/views"));
-app.use(Cors());
+
+// ** MIDDLEWARE ** //
+const whitelist = ["http://localhost:3000", "http://localhost:8080", "https://gabes-safe-server.herokuapp.com"]
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log("** Origin of request " + origin)
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      console.log("Origin acceptable")
+      callback(null, true)
+    } else {
+      console.log("Origin rejected")
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+app.use(cors(corsOptions));
 
 // Database setup: -------------------------------------------------------------
 
@@ -56,10 +71,6 @@ Mongoose.connect(
 );
 
 // Express routes: -------------------------------------------------------------
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
 
 app.post("/register", (req, res) => {
   // If there are empty fields.
@@ -207,5 +218,16 @@ app.put("/entry", (req, res) => {
   });
 });
 
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
+// Handle React routing, return all requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
+
 // Connect server:
 app.listen(process.env.PORT);
+
+
