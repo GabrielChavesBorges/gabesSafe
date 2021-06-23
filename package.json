@@ -6,6 +6,7 @@
   "main": "./server.js",
   "proxy": "http://localhost:8080",
   "scripts": {
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

@@ -36,7 +36,7 @@ app.use(Express.static("src/views"));
 app.use(Express.static(path.join(__dirname, 'client/build')));
 
 // ** MIDDLEWARE ** //
-const whitelist = ["http://localhost:3000", "http://localhost:8080", "https://gabes-safe-server.herokuapp.com"]
+const whitelist = ["https://gabes-safe-server.herokuapp.com"]
 const corsOptions = {
   origin: function (origin, callback) {
     console.log("** Origin of request " + origin)
