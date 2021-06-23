@@ -10,45 +10,23 @@ import User from "./models/User.js";
 const app = Express();
 const saltRounds = 12; 
 // Password safety level, the higher the more secure but slower to login.
-const initialEntries = [
-  {
-      title: "Facebook",
-      login: "user@gmail.com",
-      password: "test1",
-      link: "facebook.com"
-  },
-  {
-      title: "Google",
-      login: "user@gmail.com",
-      password: "test1",
-      link: "google.com"
-  },
-  {
-      title: "LinkedIn",
-      login: "user@gmail.com",
-      password: "test1",
-      link: "linkedin.com"
+const whitelist = ["https://gabes-safe-server.herokuapp.com"]
+const corsOptions = {
+  origin: (origin, callback) => {
+    console.log("** Origin of request " + origin)
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      console.log("Origin acceptable")
+      callback(null, true)
+    } else {
+      console.log("Origin rejected")
+      callback(new Error('Not allowed by CORS'))
+    }
   }
-];
+}
 
 app.use(Express.json());
 app.use(Express.static("client/build"));
-
-// ** MIDDLEWARE ** //
-// const whitelist = ["https://gabes-safe-server.herokuapp.com"]
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     console.log("** Origin of request " + origin)
-//     if (whitelist.indexOf(origin) !== -1 || !origin) {
-//       console.log("Origin acceptable")
-//       callback(null, true)
-//     } else {
-//       console.log("Origin rejected")
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
-app.use(Cors());
+app.use(Cors(corsOptions));
 
 // Database setup: -------------------------------------------------------------
 
@@ -108,7 +86,6 @@ app.post("/register", (req, res) => {
                 const newUser = new User ({
                   email: req.body.email,
                   password: hash,
-                  entries: initialEntries
                 });
                 // Insert in database.
                 newUser.save(saveError => {
