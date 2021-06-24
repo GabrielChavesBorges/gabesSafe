@@ -4,7 +4,7 @@ import Mongoose from "mongoose";
 import Cors from "cors";
 import User from "./models/User.js";
 
-const isDev = true;
+const isDev = false;
 const app = Express();
 const saltRounds = 12; // Password safety level.
 const port = process.env.PORT || 5000;
