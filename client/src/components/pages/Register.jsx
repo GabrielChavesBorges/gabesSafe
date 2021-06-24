@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { SERVER_URL } from "../../environmentVariables.js";
 
 function Register(props) {
     const history = useHistory();
@@ -9,7 +10,6 @@ function Register(props) {
         password: "",
         passwordConfirmation: ""
     };
-    const serverPath = "https://gabes-safe.herokuapp.com";
 
     let [registration, setRegistration] = useState(emptyRegistration);
     let [notification, setNotification] = useState("");
@@ -32,7 +32,7 @@ function Register(props) {
                 setNotification("Passwords don't match.");
                 setRegistration(emptyRegistration);
         } else {
-            fetch(serverPath + "/register", {
+            fetch(SERVER_URL + "/register", {
                 "method": "POST",
                 "headers": {
                     "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { SERVER_URL } from "../../environmentVariables.js";
 
 function Login(props) {
     let history = useHistory();
@@ -8,7 +9,6 @@ function Login(props) {
         email: "",
         password: ""
     };
-    const serverPath = "https://gabes-safe.herokuapp.com";
 
     let [notification, setNotification] = useState("");
     let [login, setLogin] = useState(emptyLogin);
@@ -26,7 +26,7 @@ function Login(props) {
             setNotification("Invalid email.");
             setLogin(emptyLogin);
         }else {
-            fetch(serverPath + "/login", {
+            fetch(SERVER_URL + "/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -47,7 +47,6 @@ function Login(props) {
                     setLogin(emptyLogin);
                 } else if (data === "Login successful.") {
                     props.signin(login.email, history);
-                    // App will use argument as a prop to Safe jsx.
                 } else {
                     console.log("Unrecognized return from server.");
                     setLogin(emptyLogin);

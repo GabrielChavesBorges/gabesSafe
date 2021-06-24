@@ -2,19 +2,19 @@ import React, { useEffect, useState } from "react";
 import EntriesDeck from "../EntriesDeck";
 import AddEntryForm from "../AddEntryForm";
 import { useHistory } from "react-router-dom";
+import { SERVER_URL } from "../../environmentVariables.js";
 
 function Safe(props) {
 
     let history = useHistory();
     let [entries, setEntries] = useState([]);
-    const serverPath = "https://gabes-safe.herokuapp.com";
 
     // Get initial entries from DB.
     useEffect(() => {
         if(props.login === "") {
             history.push("/");
         } else {
-            fetch(serverPath + "/populateDeck", {
+            fetch(SERVER_URL + "/populateDeck", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -28,7 +28,7 @@ function Safe(props) {
     }, []);
 
     function addEntry(entry) {
-        fetch(serverPath + "/insertEntry", {
+        fetch(SERVER_URL + "/insertEntry", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -39,7 +39,7 @@ function Safe(props) {
     }
 
     function deleteEntry(entry) {
-        fetch(serverPath + "/entry", {
+        fetch(SERVER_URL + "/entry", {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -50,7 +50,7 @@ function Safe(props) {
     }
 
     function editEntry(entry) {
-        fetch(serverPath + "/entry", {
+        fetch(SERVER_URL + "/entry", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

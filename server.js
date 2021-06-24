@@ -1,32 +1,31 @@
-// Package setup: --------------------------------------------------------------
-
-// node -r dotenv/config server.js dotenv_config_path=/C:/Users/gabri/OneDrive/Documents/Development/gabesSafe/.env
 import Bcrypt from "bcrypt";
 import Express from "express";
 import Mongoose from "mongoose";
 import Cors from "cors";
 import User from "./models/User.js";
 
+const isDev = true;
 const app = Express();
-const saltRounds = 12; 
-// Password safety level, the higher the more secure but slower to login.
-const whitelist = ["https://gabes-safe.herokuapp.com"]
+const saltRounds = 12; // Password safety level.
+const port = process.env.PORT || 5000;
+const allowedUrl = isDev ? 
+  "http://localhost:3000" : "https://gabes-safe.herokuapp.com";
 const corsOptions = {
   origin: (origin, callback) => {
-    console.log("** Origin of request " + origin)
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      console.log("Origin acceptable")
-      callback(null, true)
+    if (origin === allowedUrl) {
+      callback(null, true);
     } else {
-      console.log("Origin rejected")
-      callback(new Error('Not allowed by CORS'))
+      callback(
+        new Error("Origin of request " + origin + ' not allowed by CORS')
+      );
     }
   }
-}
+};
 
 app.use(Express.json());
 app.use(Express.static("client/build"));
 app.use(Cors(corsOptions));
+
 
 // Database setup: -------------------------------------------------------------
 
@@ -200,8 +199,11 @@ app.put("/entry", (req, res) => {
 });
 
 // Connect server:
-app.listen(process.env.PORT, () => {
+app.listen(port, () => {
   console.log("Server up");
 });
+
+// Preprocess .env call:
+// node -r dotenv/config server.js dotenv_config_path=/C:/Users/gabri/OneDrive/Documents/Development/gabesSafe/.env
 
 
