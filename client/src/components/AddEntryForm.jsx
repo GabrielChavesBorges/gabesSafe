@@ -1,39 +1,45 @@
 import React, { useState } from 'react';
-import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle} 
-  from '@material-ui/core';
+import PropTypes from 'prop-types';
+import {
+  Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle,
+} from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
- function AddEntryForm(props) {
-  const emptyForm = {
-    title: "",
-    link: "",
-    login: "",
-    password: ""
+function AddEntryForm(props) {
+  AddEntryForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
   };
 
-  let [open, setOpen] = useState(false);
-  let [entryInfo, setEntryInfo] = useState(emptyForm);
-  let [notification, setNotification] = useState(""); 
+  const emptyForm = {
+    title: '',
+    link: '',
+    login: '',
+    password: '',
+  };
 
-  function handleChange (event) {
-    const {name, value} = event.target;
-    setEntryInfo((previousState) => ({...previousState, [name]: value}));
+  const [open, setOpen] = useState(false);
+  const [entryInfo, setEntryInfo] = useState(emptyForm);
+  const [notification, setNotification] = useState('');
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setEntryInfo((previousState) => ({ ...previousState, [name]: value }));
   }
 
-  const handleClickOpen = () => {
+  function handleClickOpen() {
     setOpen(true);
-  };
+  }
 
-  const handleClose = () => {
+  function handleClose() {
     setEntryInfo(emptyForm);
     setOpen(false);
-  };
+  }
 
-  function handleAdd () {
+  function handleAdd() {
     // Check if all fields are blank
-    if(entryInfo.title === "" && entryInfo.link === "" && 
-      entryInfo.login === "" && entryInfo.password === "") {
-      setNotification("Please insert some information before adding.");
+    if (entryInfo.title === '' && entryInfo.link === ''
+      && entryInfo.login === '' && entryInfo.password === '') {
+      setNotification('Please insert some information before adding.');
     } else { // Add entry
       props.onSubmit(entryInfo);
       handleClose();
@@ -43,9 +49,13 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        <p><AddCircleIcon /> Add new password</p>
+        <p>
+          <AddCircleIcon />
+          {' '}
+          Add new password
+        </p>
       </Button>
-      
+
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add new password</DialogTitle>
         <DialogContent>

@@ -1,9 +1,11 @@
-import React from "react";
-import {Card, CardContent, CardActions, IconButton, Typography} 
-  from "@material-ui/core";
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditEntryForm from "./EditEntryForm";
+import PropTypes from 'prop-types';
+import {
+  Card, CardContent, CardActions, IconButton, Typography,
+} from '@material-ui/core';
+import EditEntryForm from './EditEntryForm';
 
 const useStyles = makeStyles({
   root: {
@@ -11,17 +13,32 @@ const useStyles = makeStyles({
   },
   label: {
     fontSize: 14,
-    color: "#4b7bec"
+    color: '#4b7bec',
   },
   info: {
     fontSize: 18,
-    color: "#4b6584"
-  }
+    color: '#4b6584',
+  },
 });
 
 function EntryCard(props) {
+  EntryCard.propTypes = {
+    onDelete: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
+    content: PropTypes.shape.isRequired,
+  };
+
+  const { content } = props;
+  const {
+    _id,
+    title,
+    link,
+    login,
+    password,
+  } = content;
+
   function deleteEntry() {
-    props.onDelete(props.content._id);
+    props.onDelete(_id);
   }
 
   function editEntry(entry) {
@@ -30,7 +47,7 @@ function EntryCard(props) {
 
   const classes = useStyles();
 
-  return(
+  return (
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.label}>
@@ -38,7 +55,7 @@ function EntryCard(props) {
         </Typography>
 
         <Typography className={classes.info}>
-          {props.content.title}
+          {title}
         </Typography>
 
         <Typography className={classes.label}>
@@ -46,7 +63,7 @@ function EntryCard(props) {
         </Typography>
 
         <Typography className={classes.info}>
-          {props.content.link}
+          {link}
         </Typography>
 
         <Typography className={classes.label}>
@@ -54,7 +71,7 @@ function EntryCard(props) {
         </Typography>
 
         <Typography className={classes.info}>
-          {props.content.login}
+          {login}
         </Typography>
 
         <Typography className={classes.label}>
@@ -62,19 +79,19 @@ function EntryCard(props) {
         </Typography>
 
         <Typography className={classes.info}>
-          {props.content.password}
+          {password}
         </Typography>
-        
-        
-        
-        
       </CardContent>
       <CardActions>
         <IconButton onClick={deleteEntry}>
           <DeleteIcon />
         </IconButton>
 
-        <EditEntryForm entry={props.content} onSubmit={editEntry}/>
+        <EditEntryForm
+          entry={content}
+          onSubmit={editEntry}
+
+        />
       </CardActions>
     </Card>
   );

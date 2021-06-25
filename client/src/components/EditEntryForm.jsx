@@ -1,36 +1,42 @@
+import EditIcon from '@material-ui/icons/Edit';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, 
-  IconButton} from '@material-ui/core';
-import EditIcon from "@material-ui/icons/Edit";
+import {
+  Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, IconButton,
+} from '@material-ui/core';
 
- function EditEntryForm(props) {
-  const emptyForm = {
-    _id: "",
-    title: "",
-    link: "",
-    login: "",
-    password: ""
+function EditEntryForm(props) {
+  EditEntryForm.propTypes = {
+    entry: PropTypes.shape.isRequired,
+    onSubmit: PropTypes.func.isRequired,
   };
 
-  let [open, setOpen] = useState(false);
-  let [entryInfo, setEntryInfo] = useState(emptyForm);
+  const emptyForm = {
+    _id: '',
+    title: '',
+    link: '',
+    login: '',
+    password: '',
+  };
+  const [entryInfo, setEntryInfo] = useState(emptyForm);
+  const [open, setOpen] = useState(false);
 
-  function handleChange (event) {
-    const {name, value} = event.target;
-    setEntryInfo((previousState) => ({...previousState, [name]: value}));
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setEntryInfo((previousState) => ({ ...previousState, [name]: value }));
   }
 
-  const handleClickOpen = () => {
+  function handleClickOpen() {
     setEntryInfo(props.entry);
     setOpen(true);
-  };
+  }
 
-  const handleClose = () => {
+  function handleClose() {
     setEntryInfo(emptyForm);
     setOpen(false);
-  };
+  }
 
-  function handleSubmit () {
+  function handleSubmit() {
     props.onSubmit(entryInfo);
     handleClose();
   }
@@ -38,7 +44,7 @@ import EditIcon from "@material-ui/icons/Edit";
   return (
     <div>
       <IconButton onClick={handleClickOpen}>
-          <EditIcon />
+        <EditIcon />
       </IconButton>
 
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
