@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SERVER_URL from '../../environmentVariables';
 import EntriesDeck from '../EntriesDeck';
-import AddEntryForm from '../AddEntryForm';
+import AddEntryForm from '../forms/AddEntryForm';
 
 function Safe(props) {
   Safe.propTypes = {

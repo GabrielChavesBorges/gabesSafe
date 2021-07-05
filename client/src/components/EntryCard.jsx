@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {
   Card, CardContent, CardActions, IconButton, Typography,
 } from '@material-ui/core';
-import EditEntryForm from './EditEntryForm';
+import EditEntryForm from './forms/EditEntryForm';
 
 const useStyles = makeStyles({
   root: {
