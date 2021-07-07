@@ -122,7 +122,7 @@ function LoginForm(props) {
   // Jsx: ----------------------------------------------------------------------
   return (
     <form className={classes.form}>
-      <h1 className={classes.header}>Register</h1>
+      <h1 className={classes.header}>Login</h1>
       <div>
         <TextField
           className="loginInput"
@@ -160,7 +160,7 @@ function LoginForm(props) {
         type="button"
         onClick={attemptLogin}
       >
-        Register
+        Login
       </Button>
     </form>
   );
