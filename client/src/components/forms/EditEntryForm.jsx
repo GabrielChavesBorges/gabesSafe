@@ -1,14 +1,20 @@
-import EditIcon from '@material-ui/icons/Edit';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, IconButton,
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from '@material-ui/core';
 
 function EditEntryForm(props) {
   EditEntryForm.propTypes = {
     entry: PropTypes.shape.isRequired,
     onSubmit: PropTypes.func.isRequired,
+    onCloseEdit: PropTypes.func.isRequired,
+    visible: PropTypes.bool.isRequired,
   };
 
   const emptyForm = {
@@ -19,21 +25,15 @@ function EditEntryForm(props) {
     password: '',
   };
   const [entryInfo, setEntryInfo] = useState(emptyForm);
-  const [open, setOpen] = useState(false);
+  const { visible } = props;
 
   function handleChange(event) {
     const { name, value } = event.target;
     setEntryInfo((previousState) => ({ ...previousState, [name]: value }));
   }
 
-  function handleClickOpen() {
-    setEntryInfo(props.entry);
-    setOpen(true);
-  }
-
   function handleClose() {
-    setEntryInfo(emptyForm);
-    setOpen(false);
+    props.onCloseEdit();
   }
 
   function handleSubmit() {
@@ -41,13 +41,13 @@ function EditEntryForm(props) {
     handleClose();
   }
 
+  useEffect(() => {
+    setEntryInfo(props.entry);
+  }, []);
+
   return (
     <div>
-      <IconButton onClick={handleClickOpen}>
-        <EditIcon />
-      </IconButton>
-
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={visible} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Edit password</DialogTitle>
 
         <DialogContent>

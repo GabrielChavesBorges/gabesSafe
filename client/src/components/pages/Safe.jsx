@@ -69,8 +69,6 @@ function Safe(props) {
 
   return (
     <div>
-      <h1>Safe</h1>
-
       <EntriesDeck
         entries={entries}
         onDelete={deleteEntry}

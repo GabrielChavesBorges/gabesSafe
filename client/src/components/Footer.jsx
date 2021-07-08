@@ -6,16 +6,16 @@ import GabesTheme from './Theme';
 
 const useStyles = makeStyles(() => ({
   footer: {
-    'background-color': GabesTheme.palette.secondary.main,
-    'border-top-style': 'solid',
-    'border-top-color': GabesTheme.palette.primary.dark,
-    'border-top-width': 'medium',
-    'text-align': 'center',
+    backgroundColor: GabesTheme.palette.secondary.main,
+    borderTopStyle: 'solid',
+    borderTopColor: GabesTheme.palette.primary.dark,
+    borderTopWidth: 'medium',
+    textAlign: 'center',
     padding: '30px 0',
   },
   signature: {
     color: GabesTheme.palette.primary.main,
-    'font-weight': '700',
+    fontWeight: '700',
     position: 'relative',
     bottom: '3.5px',
   },
@@ -24,11 +24,11 @@ const useStyles = makeStyles(() => ({
   },
   credits: {
     color: GabesTheme.palette.primary.main,
-    'font-size': '0.7rem',
-    'margin-top': '20px',
+    fontSize: '0.7rem',
+    marginTop: '20px',
   },
   creditLink: {
-    'font-weight': 'bold',
+    fontWeight: 'bold',
     color: GabesTheme.palette.primary.dark,
     '&:hover': {
       color: GabesTheme.palette.primary.light,

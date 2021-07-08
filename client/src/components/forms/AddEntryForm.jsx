@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle,
 } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import GabesTheme from '../Theme';
+
+const useStyles = makeStyles(() => ({
+  addEntryButton: {
+    display: 'block',
+    margin: '40px auto',
+    width: '250px',
+    height: '70px',
+    '&:hover': {
+      backgroundColor: '#F9F9F9',
+      borderColor: GabesTheme.palette.primary.dark,
+    },
+  },
+  buttonText: {
+    position: 'relative',
+    bottom: '6px',
+    left: '5px',
+  },
+}));
 
 function AddEntryForm(props) {
   AddEntryForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
   };
 
+  const classes = useStyles();
   const emptyForm = {
     title: '',
     link: '',
@@ -48,12 +69,14 @@ function AddEntryForm(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        <p>
-          <AddCircleIcon />
-          {' '}
-          Add new password
-        </p>
+      <Button
+        className={classes.addEntryButton}
+        variant="contained"
+        color="secondary"
+        onClick={handleClickOpen}
+      >
+        <AddCircleIcon />
+        <span className={classes.buttonText}>Add new password</span>
       </Button>
 
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

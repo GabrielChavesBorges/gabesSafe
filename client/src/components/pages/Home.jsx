@@ -43,6 +43,17 @@ function Home() {
       <Grid className={classes.content} item md={6}>
         <p className={classes.slogan}>{slogan}</p>
 
+        <Link to="/login">
+          <Button
+            className={classes.button}
+            color="secondary"
+            variant="outlined"
+            type="button"
+          >
+            Log in
+          </Button>
+        </Link>
+
         <Link to="/register">
           <Button
             className={classes.button}
@@ -54,16 +65,6 @@ function Home() {
           </Button>
         </Link>
 
-        <Link to="/login">
-          <Button
-            className={classes.button}
-            color="secondary"
-            variant="outlined"
-            type="button"
-          >
-            Log in
-          </Button>
-        </Link>
       </Grid>
       <Grid item md={6}>
         <img

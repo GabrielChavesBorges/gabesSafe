@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import { ToastProvider } from 'react-toast-notifications';
 import EntryCard from './EntryCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    maxWidth: '95%',
+    marginLeft: '35px',
+    marginTop: '20px',
   },
   paper: {
     padding: theme.spacing(2),
@@ -35,11 +39,15 @@ function EntriesDeck(props) {
   }
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
+    <ToastProvider
+      autoDismiss
+      autoDismissTimeout={2000}
+    >
+      <Grid className={classes.root} container spacing={3}>
         {entries.map((entry) => (
-          <Grid key={`${id}grid`} item xs={3}>
+          <Grid key={`${id}grid`} item lg={3} md={4} sm={6} xs={12}>
             <EntryCard
+              className={classes.paper}
               key={id}
               content={entry}
               onDelete={deleteEntry}
@@ -48,7 +56,7 @@ function EntriesDeck(props) {
           </Grid>
         ))}
       </Grid>
-    </div>
+    </ToastProvider>
   );
 }
 
