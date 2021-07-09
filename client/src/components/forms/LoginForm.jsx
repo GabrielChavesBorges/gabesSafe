@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import {
+  Button,
+  TextField,
+  IconButton,
+  InputAdornment,
+} from '@material-ui/core';
+import {
+  Visibility as VisibilityIcon,
+  VisibilityOff as VisibilityOffIcon,
+} from '@material-ui/icons';
 import SERVER_URL from '../../environmentVariables';
 import GabesTheme from '../Theme';
 
@@ -52,6 +60,7 @@ function LoginForm(props) {
     passwordConfirmation: '',
   };
   const [errorMessage, setErrorMessage] = useState(errorMessageInitializer);
+  const [passwordVisible, setPasswordVisible] = useState('password');
   // Props validation
   LoginForm.propTypes = {
     onLogin: PropTypes.func.isRequired,
@@ -119,6 +128,20 @@ function LoginForm(props) {
     }
   }
 
+  function handleClickShowPassword() {
+    setPasswordVisible((previousState) => {
+      if (previousState === 'password') {
+        return 'text';
+      }
+      // Else:
+      return 'password';
+    });
+  }
+
+  function handleMouseDownPassword(event) {
+    event.preventDefault();
+  }
+
   // Jsx: ----------------------------------------------------------------------
   return (
     <form className={classes.form}>
@@ -142,7 +165,24 @@ function LoginForm(props) {
         <TextField
           required
           name="password"
-          type="password"
+          type={passwordVisible}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment
+                position="end"
+              >
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {(passwordVisible === 'text')
+                    ? <VisibilityIcon color="primary" />
+                    : <VisibilityOffIcon color="primary" />}
+                </IconButton>
+              </InputAdornment>),
+          }}
           variant="outlined"
           label={inputError.password ? 'Error' : 'Password'}
           error={inputError.password}

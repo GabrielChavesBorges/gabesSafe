@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { ToastProvider } from 'react-toast-notifications';
+import { makeStyles } from '@material-ui/core/styles';
 import SERVER_URL from '../../environmentVariables';
 import EntriesDeck from '../EntriesDeck';
 import AddEntryForm from '../forms/AddEntryForm';
+
+const useStyles = makeStyles({
+  root: {
+    minHeight: '450px',
+  },
+});
 
 function Safe(props) {
   Safe.propTypes = {
@@ -12,6 +20,7 @@ function Safe(props) {
 
   const history = useHistory();
   const [entries, setEntries] = useState([]);
+  const classes = useStyles();
 
   // Get initial entries from DB.
   useEffect(() => {
@@ -68,16 +77,16 @@ function Safe(props) {
   }
 
   return (
-    <div>
+    <div className={classes.root}>
       <EntriesDeck
         entries={entries}
         onDelete={deleteEntry}
         onEdit={editEntry}
       />
 
-      <AddEntryForm
-        onSubmit={addEntry}
-      />
+      <ToastProvider autoDismiss autoDismissTimeout={5000}>
+        <AddEntryForm onSubmit={addEntry} />
+      </ToastProvider>
     </div>
   );
 }

@@ -31,6 +31,7 @@ import GabesTheme from './Theme';
 const useStyles = makeStyles({
   root: {
     width: '290px',
+    paddingBottom: '20px',
   },
   header: {
     color: GabesTheme.palette.primary.dark,
@@ -47,6 +48,15 @@ const useStyles = makeStyles({
     position: 'relative',
     left: '5px',
   },
+  link: {
+    color: GabesTheme.palette.primary.dark,
+    '&:visited': {
+      color: GabesTheme.palette.primary.dark,
+    },
+    '&:hover': {
+      color: GabesTheme.palette.primary.light,
+    },
+  },
 });
 
 // Entry Card: -----------------------------------------------------------------
@@ -58,6 +68,7 @@ function EntryCard(props) {
     content: PropTypes.shape.isRequired,
   };
 
+  const classes = useStyles();
   const { addToast } = useToasts();
   const [editFormVisible, setEditFormVisible] = useState(false);
   const [dropDownMenuAnchor, setDropDownMenuAnchor] = useState(null);
@@ -129,7 +140,16 @@ function EntryCard(props) {
     event.preventDefault();
   }
 
-  const classes = useStyles();
+  function convertToUrl(input) {
+    if (/^http:/.test(input)) {
+      return input;
+    }
+    if (/^www./.test(input)) {
+      return `http://${input}`;
+    } // Else:
+    return `http://www.${input}`;
+  }
+  const urlLink = convertToUrl(link);
 
   // JSX: ----------------------------------------------------------------------
 
@@ -137,8 +157,8 @@ function EntryCard(props) {
     <Card className={classes.root}>
       <CardHeader
         className={classes.header}
-        title={title}
-        subheader={link}
+        title={<a className={classes.link} href={urlLink}>{title}</a>}
+        // subheader={link}
         action={(
           <IconButton>
             <MoreOptionsIcon onClick={handleClickMoreOptions} color="primary" />

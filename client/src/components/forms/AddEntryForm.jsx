@@ -1,11 +1,27 @@
+// Imports: --------------------------------------------------------------------
+
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useToasts } from 'react-toast-notifications';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle,
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  InputAdornment,
 } from '@material-ui/core';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import {
+  AddCircle as AddCircleIcon,
+  Visibility as VisibilityIcon,
+  VisibilityOff as VisibilityOffIcon,
+} from '@material-ui/icons';
 import GabesTheme from '../Theme';
+
+// Style: ----------------------------------------------------------------------
 
 const useStyles = makeStyles(() => ({
   addEntryButton: {
@@ -18,19 +34,41 @@ const useStyles = makeStyles(() => ({
       borderColor: GabesTheme.palette.primary.dark,
     },
   },
-  buttonText: {
+  addButtonText: {
     position: 'relative',
     bottom: '6px',
     left: '5px',
   },
+  header: {
+    color: GabesTheme.palette.primary.main,
+  },
+  actions: {
+    marginTop: '10px',
+    marginBottom: '20px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  formButton: {
+    color: GabesTheme.palette.secondary.main,
+    backgroundColor: GabesTheme.palette.primary.main,
+    width: '100px',
+    '&:hover': {
+      backgroundColor: GabesTheme.palette.primary.light,
+    },
+  },
 }));
+
+// Add Entry Form: -------------------------------------------------------------
 
 function AddEntryForm(props) {
   AddEntryForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
   };
 
+  // Constants: ------------------------------------------------------------------
+
   const classes = useStyles();
+  const { addToast } = useToasts();
   const emptyForm = {
     title: '',
     link: '',
@@ -40,7 +78,9 @@ function AddEntryForm(props) {
 
   const [open, setOpen] = useState(false);
   const [entryInfo, setEntryInfo] = useState(emptyForm);
-  const [notification, setNotification] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState('password');
+
+  // Functions: ----------------------------------------------------------------
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -58,14 +98,31 @@ function AddEntryForm(props) {
 
   function handleAdd() {
     // Check if all fields are blank
+    const emptyFormMsg = 'Please insert some information before adding.';
     if (entryInfo.title === '' && entryInfo.link === ''
       && entryInfo.login === '' && entryInfo.password === '') {
-      setNotification('Please insert some information before adding.');
+      addToast(emptyFormMsg, { appearance: 'error' });
     } else { // Add entry
       props.onSubmit(entryInfo);
       handleClose();
     }
   }
+
+  function handleClickShowPassword() {
+    setPasswordVisible((previousState) => {
+      if (previousState === 'password') {
+        return 'text';
+      }
+      // Else:
+      return 'password';
+    });
+  }
+
+  function handleMouseDownPassword(event) {
+    event.preventDefault();
+  }
+
+  // JSX: ----------------------------------------------------------------------
 
   return (
     <div>
@@ -76,11 +133,15 @@ function AddEntryForm(props) {
         onClick={handleClickOpen}
       >
         <AddCircleIcon />
-        <span className={classes.buttonText}>Add new password</span>
+        <span className={classes.addButtonText}>Add new password</span>
       </Button>
 
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Add new password</DialogTitle>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle className={classes.header}>Add new password</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -115,7 +176,24 @@ function AddEntryForm(props) {
             label="Password"
             name="password"
             autoComplete="off"
-            type="password"
+            type={passwordVisible}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment
+                  position="end"
+                >
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {(passwordVisible === 'text')
+                      ? <VisibilityIcon color="primary" />
+                      : <VisibilityOffIcon color="primary" />}
+                  </IconButton>
+                </InputAdornment>),
+            }}
             onChange={handleChange}
             value={entryInfo.password}
             fullWidth
@@ -134,13 +212,12 @@ function AddEntryForm(props) {
             fullWidth
           />
         </DialogContent>
-        <p>{notification}</p>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
+        <DialogActions className={classes.actions}>
+          <Button className={classes.formButton} onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleAdd} color="primary">
-            Add
+          <Button className={classes.formButton} onClick={handleAdd}>
+            Ok
           </Button>
         </DialogActions>
       </Dialog>

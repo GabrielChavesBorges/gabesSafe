@@ -1,7 +1,7 @@
-import Bcrypt   from 'bcrypt';
-import Express  from 'express';
-import Cors     from 'cors';
-import User     from './models/User.js';
+import Bcrypt from 'bcrypt';
+import Express from 'express';
+import Cors from 'cors';
+import User from './models/User.js';
 import { databaseSetup } from './database.js';
 
 // Global constants and variables: ---------------------------------------------

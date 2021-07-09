@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import {
+  Button,
+  TextField,
+  IconButton,
+  InputAdornment,
+} from '@material-ui/core';
+import {
+  Visibility as VisibilityIcon,
+  VisibilityOff as VisibilityOffIcon,
+} from '@material-ui/icons';
 import SERVER_URL from '../../environmentVariables';
 import GabesTheme from '../Theme';
 
 // Style: ----------------------------------------------------------------------
+
 const useStyles = makeStyles((theme) => ({
   form: {
     '& .MuiTextField-root': {
@@ -35,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 function RegisterForm(props) {
   // Constants: ----------------------------------------------------------------
+
   const emailValidation = /(.+)@(.+){2,}\.(.+){2,}/;
   const history = useHistory();
   // Hooks:
@@ -56,6 +66,7 @@ function RegisterForm(props) {
     passwordConfirmation: '',
   };
   const [errorMessage, setErrorMessage] = useState(errorMessageInitializer);
+  const [passwordVisible, setPasswordVisible] = useState('password');
   // Props validation
   RegisterForm.propTypes = {
     onRegister: PropTypes.func.isRequired,
@@ -135,6 +146,20 @@ function RegisterForm(props) {
     event.preventDefault();
   }
 
+  function handleClickShowPassword() {
+    setPasswordVisible((previousState) => {
+      if (previousState === 'password') {
+        return 'text';
+      }
+      // Else:
+      return 'password';
+    });
+  }
+
+  function handleMouseDownPassword(event) {
+    event.preventDefault();
+  }
+
   // Jsx: ----------------------------------------------------------------------
   return (
     <form className={classes.form}>
@@ -158,7 +183,24 @@ function RegisterForm(props) {
         <TextField
           required
           name="password"
-          type="password"
+          type={passwordVisible}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment
+                position="end"
+              >
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {(passwordVisible === 'text')
+                    ? <VisibilityIcon color="primary" />
+                    : <VisibilityOffIcon color="primary" />}
+                </IconButton>
+              </InputAdornment>),
+          }}
           variant="outlined"
           label={inputError.password ? 'Error' : 'Password'}
           error={inputError.password}
@@ -172,7 +214,24 @@ function RegisterForm(props) {
         <TextField
           required
           name="passwordConfirmation"
-          type="password"
+          type={passwordVisible}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment
+                position="end"
+              >
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {(passwordVisible === 'text')
+                    ? <VisibilityIcon color="primary" />
+                    : <VisibilityOffIcon color="primary" />}
+                </IconButton>
+              </InputAdornment>),
+          }}
           variant="outlined"
           label={inputError.passwordConfirmation ? 'Error' : 'Confirm Password'}
           error={inputError.passwordConfirmation}

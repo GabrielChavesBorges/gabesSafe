@@ -1,5 +1,8 @@
+// Imports: --------------------------------------------------------------------
+
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Button,
   TextField,
@@ -7,9 +10,41 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
+  InputAdornment,
 } from '@material-ui/core';
+import {
+  Visibility as VisibilityIcon,
+  VisibilityOff as VisibilityOffIcon,
+} from '@material-ui/icons';
+import GabesTheme from '../Theme';
+
+// Style: ----------------------------------------------------------------------
+
+const useStyles = makeStyles({
+  header: {
+    color: GabesTheme.palette.primary.main,
+  },
+  actions: {
+    marginTop: '10px',
+    marginBottom: '20px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  button: {
+    color: GabesTheme.palette.secondary.main,
+    backgroundColor: GabesTheme.palette.primary.main,
+    width: '100px',
+    '&:hover': {
+      backgroundColor: GabesTheme.palette.primary.light,
+    },
+  },
+});
+
+// Edit Entry Form: ------------------------------------------------------------
 
 function EditEntryForm(props) {
+  // Prop validation:
   EditEntryForm.propTypes = {
     entry: PropTypes.shape.isRequired,
     onSubmit: PropTypes.func.isRequired,
@@ -17,6 +52,9 @@ function EditEntryForm(props) {
     visible: PropTypes.bool.isRequired,
   };
 
+  // Consts: -------------------------------------------------------------------
+
+  const classes = useStyles();
   const emptyForm = {
     _id: '',
     title: '',
@@ -25,7 +63,10 @@ function EditEntryForm(props) {
     password: '',
   };
   const [entryInfo, setEntryInfo] = useState(emptyForm);
+  const [passwordVisible, setPasswordVisible] = useState('password');
   const { visible } = props;
+
+  // Functions: ----------------------------------------------------------------
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -41,14 +82,34 @@ function EditEntryForm(props) {
     handleClose();
   }
 
+  function handleClickShowPassword() {
+    setPasswordVisible((previousState) => {
+      if (previousState === 'password') {
+        return 'text';
+      }
+      // Else:
+      return 'password';
+    });
+  }
+
+  function handleMouseDownPassword(event) {
+    event.preventDefault();
+  }
+
   useEffect(() => {
     setEntryInfo(props.entry);
   }, []);
 
+  // JSX: ----------------------------------------------------------------------
+
   return (
     <div>
-      <Dialog open={visible} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Edit password</DialogTitle>
+      <Dialog
+        open={visible}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle className={classes.header}>Edit password</DialogTitle>
 
         <DialogContent>
           <TextField
@@ -86,7 +147,24 @@ function EditEntryForm(props) {
             label="Password"
             name="password"
             autoComplete="off"
-            type="password"
+            type={passwordVisible}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment
+                  position="end"
+                >
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {(passwordVisible === 'text')
+                      ? <VisibilityIcon color="primary" />
+                      : <VisibilityOffIcon color="primary" />}
+                  </IconButton>
+                </InputAdornment>),
+            }}
             onChange={handleChange}
             value={entryInfo.password}
             fullWidth
@@ -107,12 +185,12 @@ function EditEntryForm(props) {
           />
         </DialogContent>
 
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
+        <DialogActions className={classes.actions}>
+          <Button className={classes.button} onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="primary">
-            Submit
+          <Button className={classes.button} onClick={handleSubmit}>
+            Ok
           </Button>
         </DialogActions>
       </Dialog>
