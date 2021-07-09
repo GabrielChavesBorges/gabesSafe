@@ -42,7 +42,7 @@ function EntriesDeck(props) {
     <ToastProvider autoDismiss autoDismissTimeout={2000}>
       <Grid className={classes.root} container spacing={3}>
         {entries.map((entry) => (
-          <Grid key={`${id}grid`} item lg={3} md={12}>
+          <Grid key={`${id}grid`} item lg={3} md={4} sm={6} xs={12}>
             <EntryCard
               className={classes.paper}
               key={id}
