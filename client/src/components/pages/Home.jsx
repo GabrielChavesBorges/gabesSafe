@@ -6,6 +6,9 @@ import Button from '@material-ui/core/Button';
 import GabesTheme from '../Theme';
 
 const useStyles = makeStyles(() => ({
+  root: {
+    flexGrow: 1,
+  },
   content: {
     textAlign: 'center',
   },
@@ -39,41 +42,43 @@ function Home() {
   const imgUrl = 'https://images.unsplash.com/photo-1582139329536-e7284fece509?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80';
 
   return (
-    <Grid container spacing={0}>
-      <Grid className={classes.content} item lg={6} md={6} sm={12} xs={12}>
-        <p className={classes.slogan}>{slogan}</p>
+    <div className={classes.root}>
+      <Grid container spacing={0}>
+        <Grid className={classes.content} item lg={6} md={6} sm={12} xs={12}>
+          <p className={classes.slogan}>{slogan}</p>
 
-        <Link to="/login">
-          <Button
-            className={classes.button}
-            color="secondary"
-            variant="outlined"
-            type="button"
-          >
-            Log in
-          </Button>
-        </Link>
+          <Link to="/login">
+            <Button
+              className={classes.button}
+              color="secondary"
+              variant="outlined"
+              type="button"
+            >
+              Log in
+            </Button>
+          </Link>
 
-        <Link to="/register">
-          <Button
-            className={classes.button}
-            color="primary"
-            variant="contained"
-            type="button"
-          >
-            Register
-          </Button>
-        </Link>
+          <Link to="/register">
+            <Button
+              className={classes.button}
+              color="primary"
+              variant="contained"
+              type="button"
+            >
+              Register
+            </Button>
+          </Link>
 
+        </Grid>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <img
+            className={classes.image}
+            src={imgUrl}
+            alt="Safe vault."
+          />
+        </Grid>
       </Grid>
-      <Grid item md={6}>
-        <img
-          className={classes.image}
-          src={imgUrl}
-          alt="Safe vault."
-        />
-      </Grid>
-    </Grid>
+    </div>
   );
 }
 
