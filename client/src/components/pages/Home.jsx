@@ -40,7 +40,7 @@ function Home() {
 
   return (
     <Grid container spacing={0}>
-      <Grid className={classes.content} item md={6}>
+      <Grid className={classes.content} item lg={6} md={6} sm={12} xs={12}>
         <p className={classes.slogan}>{slogan}</p>
 
         <Link to="/login">
