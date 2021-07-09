@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import GabesTheme from '../Theme';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,11 +28,7 @@ const useStyles = makeStyles(() => ({
   image: {
     width: '100%',
     height: '100%',
-    'border-left-style': 'solid',
-    'border-left-color': GabesTheme.palette.secondary.main,
-    'border-left-width': '20px',
   },
-
 }));
 
 function Home() {
@@ -68,8 +63,8 @@ function Home() {
               Register
             </Button>
           </Link>
-
         </Grid>
+
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <img
             className={classes.image}
