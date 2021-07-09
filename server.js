@@ -6,7 +6,7 @@ import { databaseSetup } from './database.js';
 
 // Global constants and variables: ---------------------------------------------
 
-const isDev = false; // Development mode.
+const isDev = true; // Development mode.
 const app = Express();
 const saltRounds = 12; // Password safety level.
 const port = process.env.PORT || 5000;

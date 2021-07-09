@@ -6,6 +6,7 @@ import LoginForm from '../forms/LoginForm';
 const useStyles = makeStyles(() => ({
   root: {
     textAlign: 'center',
+    height: '71vh',
   },
 }));
 

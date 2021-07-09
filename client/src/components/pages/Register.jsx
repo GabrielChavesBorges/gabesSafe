@@ -6,6 +6,7 @@ import RegisterForm from '../forms/RegisterForm';
 const useStyles = makeStyles(() => ({
   root: {
     textAlign: 'center',
+    height: '71vh',
   },
 }));
 

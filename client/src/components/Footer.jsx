@@ -11,7 +11,8 @@ const useStyles = makeStyles(() => ({
     borderTopColor: GabesTheme.palette.primary.dark,
     borderTopWidth: 'medium',
     textAlign: 'center',
-    padding: '30px 0',
+    padding: '5vh 0',
+    height: '10vh',
   },
   signature: {
     color: GabesTheme.palette.primary.main,

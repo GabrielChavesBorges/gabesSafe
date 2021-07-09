@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
       width: '25ch',
     },
     textAlign: 'center',
-    marginTop: '75px',
+    marginTop: '4vh',
     marginBottom: '75px',
     borderStyle: 'solid',
     borderColor: GabesTheme.palette.primary.main,

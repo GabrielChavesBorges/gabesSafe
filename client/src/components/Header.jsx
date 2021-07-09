@@ -8,8 +8,8 @@ import GabesTheme from './Theme';
 const useStyles = makeStyles({
   navbar: {
     backgroundColor: '#fff',
-    height: '25px',
-    padding: '15px',
+    height: '5vh',
+    padding: '2vh',
     borderBottomStyle: 'solid',
     borderBottomColor: GabesTheme.palette.primary.dark,
     borderBottomWidth: 'medium',

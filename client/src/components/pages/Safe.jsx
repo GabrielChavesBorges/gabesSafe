@@ -9,7 +9,8 @@ import AddEntryForm from '../forms/AddEntryForm';
 
 const useStyles = makeStyles({
   root: {
-    minHeight: '450px',
+    minHeight: '71vh',
+    width: '98vw',
   },
 });
 
