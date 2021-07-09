@@ -39,7 +39,7 @@ function Home() {
   return (
     <div className={classes.root}>
       <Grid container spacing={0}>
-        <Grid className={classes.content} item lg={6} md={6} sm={12} xs={12}>
+        <Grid className={classes.content} item lg={6} md={12}>
           <p className={classes.slogan}>{slogan}</p>
 
           <Link to="/login">
