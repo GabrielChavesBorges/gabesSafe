@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useLocation } from 'react-router-dom';
 import GabesTheme from './Theme';
 
 // Styles: ---------------------------------------------------------------------
@@ -12,7 +13,7 @@ const useStyles = makeStyles(() => ({
     borderTopWidth: 'medium',
     textAlign: 'center',
     padding: '5vh 0',
-    height: '10vh',
+    height: '9vh',
   },
   signature: {
     color: GabesTheme.palette.primary.main,
@@ -42,6 +43,7 @@ const useStyles = makeStyles(() => ({
 function Footer() {
   const classes = useStyles();
   const year = new Date().getFullYear();
+  const location = useLocation();
 
   return (
     <footer className={classes.footer}>
@@ -55,24 +57,26 @@ function Footer() {
       </div>
 
       <div className={classes.credits}>
-        <div>
-          Photo by
-          <a
-            className={classes.creditLink}
-            href="https://unsplash.com/@jdent?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-          >
-            {' Jason Dent'}
-          </a>
+        {(location.pathname === '/') ? (
+          <div>
+            Photo by
+            <a
+              className={classes.creditLink}
+              href="https://unsplash.com/@jdent?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+            >
+              {' Jason Dent'}
+            </a>
 
-          {' on'}
+            {' on'}
 
-          <a
-            className={classes.creditLink}
-            href="https://unsplash.com/s/photos/safe?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-          >
-            {' Unsplash'}
-          </a>
-        </div>
+            <a
+              className={classes.creditLink}
+              href="https://unsplash.com/s/photos/safe?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+            >
+              {' Unsplash'}
+            </a>
+          </div>
+        ) : ''}
 
         <div>
           Logo made by

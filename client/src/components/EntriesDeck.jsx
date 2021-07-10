@@ -9,13 +9,15 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     maxWidth: '95%',
-    marginLeft: '35px',
-    marginTop: '20px',
+    margin: '20px auto 0 auto',
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+  },
+  parent: {
+    overflowX: 'hidden',
   },
 }));
 
@@ -40,19 +42,21 @@ function EntriesDeck(props) {
 
   return (
     <ToastProvider autoDismiss autoDismissTimeout={2000}>
-      <Grid className={classes.root} container spacing={3}>
-        {entries.map((entry) => (
-          <Grid key={`${id}grid`} item lg={3} md={4} sm={6} xs={12}>
-            <EntryCard
-              className={classes.paper}
-              key={id}
-              content={entry}
-              onDelete={deleteEntry}
-              onEdit={editEntry}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      <div className={classes.parent}>
+        <Grid className={classes.root} container spacing={3}>
+          {entries.map((entry) => (
+            <Grid key={`${id}grid`} item lg={3} md={4} sm={6} xs={12}>
+              <EntryCard
+                className={classes.paper}
+                key={id}
+                content={entry}
+                onDelete={deleteEntry}
+                onEdit={editEntry}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </div>
     </ToastProvider>
   );
 }

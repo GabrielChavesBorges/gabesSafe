@@ -30,14 +30,18 @@ import GabesTheme from './Theme';
 
 const useStyles = makeStyles({
   root: {
-    width: '290px',
+    width: '270px',
     paddingBottom: '20px',
+    margin: '0',
   },
   header: {
     color: GabesTheme.palette.primary.dark,
   },
+  loginInput: {
+    width: '180px',
+  },
   passwordInput: {
-    width: '210px',
+    width: '180px',
     marginTop: '10px',
   },
   copyIcon: {
@@ -188,6 +192,7 @@ function EntryCard(props) {
       <CardContent>
         <div className={classes.input}>
           <TextField
+            className={classes.loginInput}
             id={`${_id}login`}
             label="Login"
             value={login}

@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import LoginForm from '../forms/LoginForm';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
     height: '71vh',
+    [theme.breakpoints.down('sm')]: {
+      height: '91vh',
+    },
   },
 }));
 

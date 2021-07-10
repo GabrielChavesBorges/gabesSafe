@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: GabesTheme.palette.secondary.main,
     display: 'inline-block',
     padding: '10px 20px 30px',
+    height: '71vh',
+    [theme.breakpoints.down('sm')]: {
+      height: '91vh',
+    },
   },
   button: {
     marginTop: '15px',
@@ -175,6 +179,7 @@ function RegisterForm(props) {
           error={inputError.email}
           helperText={errorMessage.email}
           value={registration.email}
+          autoComplete={false}
           onChange={updateRegistration}
         />
       </div>
