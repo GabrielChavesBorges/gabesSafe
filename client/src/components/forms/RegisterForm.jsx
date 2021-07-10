@@ -24,8 +24,7 @@ const useStyles = makeStyles((theme) => ({
       width: '25ch',
     },
     textAlign: 'center',
-    marginTop: '4vh',
-    marginBottom: '75px',
+    marginTop: '10vh',
     borderStyle: 'solid',
     borderColor: GabesTheme.palette.primary.main,
     borderWidth: 'medium',
@@ -33,10 +32,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: GabesTheme.palette.secondary.main,
     display: 'inline-block',
     padding: '10px 20px 30px',
-    height: '71vh',
-    [theme.breakpoints.down('sm')]: {
-      height: '91vh',
-    },
   },
   button: {
     marginTop: '15px',

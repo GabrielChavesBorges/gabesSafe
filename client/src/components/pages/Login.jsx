@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     height: '71vh',
     [theme.breakpoints.down('sm')]: {
-      height: '91vh',
+      height: '100vh',
     },
   },
 }));
