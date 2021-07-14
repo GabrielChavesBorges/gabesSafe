@@ -6,8 +6,9 @@ import LoginForm from '../forms/LoginForm';
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
-    height: '71vh',
-    [theme.breakpoints.down('sm')]: {
+    minHeight: '430px',
+    height: '86vh',
+    [theme.breakpoints.down('xs')]: {
       height: '100vh',
     },
   },

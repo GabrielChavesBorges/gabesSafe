@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
       width: '25ch',
     },
     textAlign: 'center',
-    marginTop: '10vh',
+    marginTop: '50px',
     borderStyle: 'solid',
     borderColor: GabesTheme.palette.primary.main,
     borderWidth: 'medium',
@@ -174,7 +174,7 @@ function RegisterForm(props) {
           error={inputError.email}
           helperText={errorMessage.email}
           value={registration.email}
-          autoComplete={false}
+          autoComplete="off"
           onChange={updateRegistration}
         />
       </div>
