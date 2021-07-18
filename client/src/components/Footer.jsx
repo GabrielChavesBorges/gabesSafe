@@ -20,6 +20,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: '700',
     position: 'relative',
     bottom: '3.5px',
+    left: '5px',
   },
   creativeCommonsLogo: {
     width: '20px',
@@ -53,7 +54,15 @@ function Footer() {
           src="https://cdn.worldvectorlogo.com/logos/creative-commons.svg"
           alt="Creative Commons"
         />
-        <span className={classes.signature}>{` ${year} Gabriel Borges`}</span>
+        <span className={classes.signature}>
+          {`${year} `}
+          <a
+            className={classes.creditLink}
+            href="https://gabrielcborges.notion.site/Hi-I-am-Gabriel-Borges-9bee8d23d2b249edb3f6c59d71e209d6"
+          >
+            Gabriel Borges
+          </a>
+        </span>
       </div>
 
       <div className={classes.credits}>
